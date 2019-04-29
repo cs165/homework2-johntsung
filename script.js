@@ -3,7 +3,7 @@
 // You can access the RESULTS_MAP from "constants.js" in this file since
 // "constants.js" has been included before "script.js" in index.html.
 
-function is_All_Checked() {
+function is_All_Checked(){
 	if(status_list[0] !== undefined && status_list[1] !== undefined && status_list[2] !== undefined) {
 		if(status_list[1] === status_list[2]){
 			return status_list[1];
@@ -14,10 +14,10 @@ function is_All_Checked() {
 	return null;
 }
 
-function Set_Checked(status) {
-	const qID = '[data-question-id="'+status.dataset.questionId+'"]';
-	const qbox = document.querySelectorAll(qID);
-	for(const question_x of qbox) {
+function Set_Checked(status){
+	const question_ID = '[data-question-id="'+status.dataset.questionId+'"]';
+	const question_box = document.querySelectorAll(question_ID);
+	for(const question_x of question_box) {
 		question_x.children[1].src = UNCHECK_IMG;
 		question_x.classList.remove('checked');
 		question_x.classList.add('unchecked');
@@ -74,24 +74,25 @@ function displayResult(result){
 	resultContainer.appendChild(resultButton);
 }
 
-function change_checked(event) {
+function change_checked(event){
 	Set_Checked(event.currentTarget);
 
 	const result = is_All_Checked();
-	if(result) {
-		for(const box of picture_list) {
+	if(result){
+		for(const box of picture_list){
 			box.removeEventListener('click', change_checked);
 		}
 		displayResult(result);
 	}
 }
-
+//define the checked image path
 const UNCHECK_IMG = 'images/unchecked.png';
 const CHECK_IMG = 'images/checked.png';
-
+//create a list
 const status_list={};
-
+// do the list
 const picture_list = document.querySelectorAll('.choice-grid div');
 for(const box of picture_list){
+	//triger the ckick  event
 	box.addEventListener('click', change_checked);
 }
